@@ -1,0 +1,119 @@
+{
+ "cells": [
+  {
+   "cell_type": "code",
+   "execution_count": 87,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "import numpy as np"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 88,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "# x=alpha\n",
+    "def coeff(dL,L,dT):\n",
+    "    x = dL/(L*dT)\n",
+    "    return x"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 89,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "# eTf=error tempearture final and eTi=error temperature initial edT= error in delta T\n",
+    "def rule3(eTf,eTi):\n",
+    "    edT = np.sqrt(eTf**2+eTi**2)\n",
+    "    return edT"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 90,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "# eL= error of length edL= error of delta L ex = error of alpha\n",
+    "def rule4(eL,edT,edL,L,dT,dL):\n",
+    "    ex = np.sqrt((eL/L)**2+(edT/dT)**2+(edL/dL)**2)\n",
+    "    return ex"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 91,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "def deltaT(Tf,Ti):\n",
+    "    dT=Tf-Ti\n",
+    "    return dT"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 95,
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "coefficient of linear expansion 1.7228309558266145e-05 and the error is 1.596296282604527e-07\n"
+     ]
+    }
+   ],
+   "source": [
+    "L = 1.05 \n",
+    "eL = 0.001 \n",
+    "dL = 0.00125 \n",
+    "edL = 0.00001 \n",
+    "Ti = 23.4 \n",
+    "Tf = 92.5 \n",
+    "eTi = 0.3 \n",
+    "eTf = 0.1 \n",
+    "\n",
+    "change_T = deltaT(Tf,Ti)\n",
+    "alpha = coeff(dL,L,change_T)\n",
+    "# above is a getting coefficient of linear expansion \n",
+    "error_T= rule3(eTf,eTi)\n",
+    "error_coeff= alpha*rule4(eL,error_T,edL,L,change_T,dL)\n",
+    "print(\"coefficient of linear expansion\",alpha,\"and the error is\",error_coeff)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": []
+  }
+ ],
+ "metadata": {
+  "kernelspec": {
+   "display_name": "Python 3",
+   "language": "python",
+   "name": "python3"
+  },
+  "language_info": {
+   "codemirror_mode": {
+    "name": "ipython",
+    "version": 3
+   },
+   "file_extension": ".py",
+   "mimetype": "text/x-python",
+   "name": "python",
+   "nbconvert_exporter": "python",
+   "pygments_lexer": "ipython3",
+   "version": "3.6.5"
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 2
+}
